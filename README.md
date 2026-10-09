@@ -235,5 +235,6 @@ If raw demonstrations or checkpoints are too large for the ZIP, provide scripts 
 5. **Data ablation.** What did you vary, why, and what was the result? Provide a comparison table or plot and explain.
 6. **Failure analysis.** Identify and analyze a failure mode, relating it where appropriate to concepts discussed in class.
 7. **Reproducibility and reflection.** Provide commands, configurations, seeds, and relevant links. What would you improve with more data, compute, or engineering time?
+8. **Citations.** Clarify what resources you used for the homework. If you used LLMs, how did you use them?
 
 **Grading emphasis:** Correctness, reproducibility, thoughtful experiment design, and analysis. Getting the highest raw task success rate is OK but this is not really the main thing I want you to learn from this assignment. 
