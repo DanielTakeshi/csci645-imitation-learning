@@ -43,6 +43,98 @@ Use **state-based observations** for the required experiments. If you prefer to 
 
 Report your hardware, major library versions, and random seeds. You are responsible for resolving installation and implementation issues; note any significant deviations from the upstream code.
 
+
+### PandaPickCube Environment Visualization
+
+The following GIFs illustrate the `PandaPickCube` environment in MuJoCo Playground, using a Franka Panda robot.
+
+<table>
+  <tr>
+    <th>Zero actions</th>
+    <th>Random actions</th>
+  </tr>
+  <tr>
+    <td><img src="PandaPickCube_zero_actions.gif" width="400"></td>
+    <td><img src="PandaPickCube_random_actions.gif" width="400"></td>
+  </tr>
+</table>
+
+
+<details>
+<summary><b>This is the code that I ran to generate the one with random actions and to save the video.</b></summary>
+
+The following Python script generates a rollout with random actions
+in the `PandaPickCube` environment and saves it as an MP4 video.
+
+```python
+import os
+os.environ["MUJOCO_GL"] = "egl"
+
+import jax
+import jax.numpy as jnp
+import mediapy as media
+
+from mujoco_playground import registry
+
+# Load PandaPickCube using the JAX backend.
+env = registry.load(
+    "PandaPickCube",
+    config_overrides={"impl": "jax"},
+)
+
+# Initialize the environment.
+reset_fn = jax.jit(env.reset)
+step_fn = jax.jit(env.step)
+
+state = reset_fn(jax.random.PRNGKey(0))
+trajectory = [state]
+
+rng = jax.random.PRNGKey(42)
+action = jnp.zeros(env.action_size)
+
+# Run the simulation with random actions.
+for i in range(200):
+    if i % 10 == 0:
+        rng, action_rng = jax.random.split(rng)
+        action = jax.random.uniform(
+            action_rng,
+            shape=(env.action_size,),
+            minval=-1.0,
+            maxval=1.0,
+        )
+
+    state = step_fn(state, action)
+    trajectory.append(state)
+
+# Render the simulation.
+print("Rendering video...")
+frames = env.render(trajectory[::2], height=480, width=640)
+
+# Save as an MP4.
+media.write_video(
+    "panda_pick_cube.mp4",
+    frames,
+    fps=round(1.0 / env.dt / 2),
+)
+
+print("Saved panda_pick_cube.mp4")
+```
+
+To reproduce the zero-action rollout, replace the random-action
+generation with:
+
+```python
+action = jnp.zeros(env.action_size)
+```
+
+at every simulation step.
+
+</details>
+
+
+For this homework, your objective is to collect demonstrations of successful manipulation and train an imitation learning policy.
+
+
 ## Part 1: Collect demonstrations
 
 Obtain a **baseline dataset of approximately 100 demonstration trajectories** using one of these approaches:
