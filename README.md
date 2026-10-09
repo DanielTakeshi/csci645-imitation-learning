@@ -41,7 +41,7 @@ Useful starting points:
 
 Use **state-based observations** for the required experiments. If you prefer to use image inputs, that's also fine (just specify that you did this in your writeup). Specify your observation and action representations, any normalization, and how action predictions are executed in the simulator.
 
-Report your hardware, major library versions, and random seeds. You are responsible for resolving installation and implementation issues; note any significant deviations from the upstream code.
+Report your hardware, major library versions, and random seeds. You are responsible for resolving installation and implementation issues; note any significant deviations from the upstream code. I use an Ubuntu 22.04 system with CUDA 12.4. 
 
 
 ### PandaPickCube Environment Visualization
