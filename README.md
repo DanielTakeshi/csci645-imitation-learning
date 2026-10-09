@@ -120,8 +120,7 @@ media.write_video(
 print("Saved panda_pick_cube.mp4")
 ```
 
-To reproduce the zero-action rollout, replace the random-action
-generation with:
+To reproduce the "zero action" rollout, replace the "random action" generation with:
 
 ```python
 action = jnp.zeros(env.action_size)
@@ -168,9 +167,9 @@ Train your chosen policy on your baseline demonstration dataset. Record:
 - Model architecture and action horizon/chunk length.
 - Training objective, optimizer, learning rate, batch size, and training duration.
 - Any observation/action normalization or data preprocessing.
-- At least one training-loss curve and the random seed(s) used.
+- At least one training loss curve and the random seed(s) used.
 
-We recommend using Weights & Biases or another logging system. Include links if applicable, but your report must remain understandable without external logins.
+We recommend using Weights & Biases or another logging system. Include links if applicable, but please make the report readable / understandable *without* me needing to do external logins. 
 
 ## Part 3: Demonstration data experiment
 
@@ -196,7 +195,7 @@ You may pursue another meaningful study of demonstration quality or quantity. Cl
 
 ## Part 4: Evaluate and analyze
 
-Evaluate **each trained student policy** on **at least 50 held-out environment initializations**, preferably using the same evaluation seeds across conditions. Do not evaluate by replaying training trajectories.
+Evaluate **each trained student policy** on **at least 50 held-out environment initializations**, preferably using the same evaluation seeds across conditions. Do not evaluate by replaying training trajectories. Note that here the "teacher" is the same as the demonstrator / expert, as discussed in class.
 
 Report at least:
 
@@ -205,7 +204,7 @@ Report at least:
 | Baseline | ... | ... | ... | >= 50 |
 | Ablation | ... | ... | ... | >= 50 |
 
-Provide representative policy rollout videos, including a success and a failure when available. Identify at least one failure mode, such as grasp errors, compounding errors, distribution shift, oscillatory actions, or failure to recover from unexpected states.
+Provide representative policy rollout videos, including a success and a failure when available. Identify at least one interesting failure mode (e.g., grasp errors, oscillatory actions). 
 
 Discuss what your comparison suggests, including limitations. A negative result is acceptable if the experiment is reproducible and the analysis is thoughtful. 
 
@@ -213,7 +212,7 @@ Discuss what your comparison suggests, including limitations. A negative result 
 
 Submit a **single ZIP archive** to Brightspace named `LASTNAME_FIRSTNAME_HW2.zip`. Include **all self-authored or modified code**, configuration files, evaluation results, report, and representative videos. For the sake of my sanity, please do not package entire third-party libraries. Instead, please document the precise versions/commits and installation steps.
 
-Suggested layout:
+Here is one possible layout, with your `report.pdf` there:
 
 ```text
 LASTNAME_FIRSTNAME_HW2/
@@ -229,11 +228,11 @@ If raw demonstrations or checkpoints are too large for the ZIP, provide scripts 
 
 ### Questions to answer in `report.pdf`
 
-1. **Task and demonstration source.** Which environment and teacher did you use? How were demonstrations generated? What was the teacher's success rate before filtering?
+1. **Task and demonstration source.** Which environment and teacher did you use? How were demonstrations generated? What was the teacher's success rate (and did you filter the data)?
 2. **Demonstration quality.** How many episodes were collected, how long were they, and how many succeeded? Show a figure and a demonstration video. What did you observe?
 3. **Policy and training.** Did you choose ACT or Diffusion Policy? Describe inputs/outputs, the training objective, chunk/prediction horizon, training configuration, and loss curves.
 4. **Baseline results.** What is the baseline policy's task success rate over at least 50 episodes? Show representative rollouts.
-5. **Data ablation.** What did you vary, why, and what was the result? Provide a comparison table or plot and explain your controls.
+5. **Data ablation.** What did you vary, why, and what was the result? Provide a comparison table or plot and explain.
 6. **Failure analysis.** Identify and analyze a failure mode, relating it where appropriate to concepts discussed in class.
 7. **Reproducibility and reflection.** Provide commands, configurations, seeds, and relevant links. What would you improve with more data, compute, or engineering time?
 
